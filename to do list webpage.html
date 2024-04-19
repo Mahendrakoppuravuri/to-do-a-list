@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .note {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+        .note-content {
+            margin-bottom: 10px;
+        }
+        .note-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .note-buttons button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .note-buttons button:hover {
+            background-color: #45a049;
+        }
+        #createNoteBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #createNoteBtn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div id="notesContainer">
+            <!-- Notes will be added dynamically here -->
+        </div>
+        <button id="createNoteBtn">+</button>
+    </div>
+
+    <script>
+        var notesContainer = document.getElementById("notesContainer");
+        var createNoteBtn = document.getElementById("createNoteBtn");
+
+        function createNote() {
+            var note = document.createElement("div");
+            note.classList.add("note");
+
+            var noteContent = document.createElement("div");
+            noteContent.classList.add("note-content");
+            noteContent.textContent = prompt("Enter note content:");
+
+            var noteButtons = document.createElement("div");
+            noteButtons.classList.add("note-buttons");
+            var editButton = document.createElement("button");
+            editButton.textContent = "Edit";
+            editButton.onclick = function() { editNoteContent(noteContent); };
+            var deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.onclick = function() { deleteNoteContainer(note); };
+
+            noteButtons.appendChild(editButton);
+            noteButtons.appendChild(deleteButton);
+
+            note.appendChild(noteContent);
+            note.appendChild(noteButtons);
+
+            notesContainer.appendChild(note);
+        }
+
+        function editNoteContent(noteContent) {
+            var newContent = prompt("Enter new note content:", noteContent.textContent);
+            if (newContent !== null) {
+                noteContent.textContent = newContent;
+            }
+        }
+
+        function deleteNoteContainer(note) {
+            if (confirm("Are you sure you want to delete this note?")) {
+                notesContainer.removeChild(note);
+            }
+        }
+
+        createNoteBtn.addEventListener("click", createNote);
+    </script>
+</body>
+</html>
